@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>行业方案 - 古村落文物保护 | 企业园区 | 智慧校园 | 商业综合体</title>
+    <meta name="description" content="专业场景化安防解决方案：古村落文物保护专家、企业园区智能管理、智慧校园安全防护、商业综合体安全运营，每个场景都有专属方案">
+    <meta name="keywords" content="古村落保护,文物保护,企业安防,智慧校园,商业综合体,场景化方案">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Chiron+Hei+HK:wght@400;700&family=Hedvig+Letters+Sans:wght@400;700&family=Noto+Serif+SC:wght@400;700&family=Quattrocento+Sans:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Animation Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    
+    <style>
+        :root {
+            --bg-primary: #0A1931;
+            --bg-secondary: #FAFAFA;
+            --color-primary: #B8860B;
+            --color-accent: #FF6B35;
+            --text-dark: #0A1931;
+            --text-light: #FAFAFA;
+        }
+        
+        body {
+            font-family: 'Noto Serif SC', 'Quattrocento Sans', serif;
+            background-color: var(--bg-primary);
+            color: var(--text-light);
+        }
+        
+        .font-heading {
+            font-family: 'Chiron Hei HK', 'Hedvig Letters Sans', sans-serif;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .nav-blur {
+            backdrop-filter: blur(10px);
+            background: rgba(10, 25, 49, 0.9);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--color-accent), #ff8c5a);
+            color: white;
+            padding: 12px 32px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255, 107, 53, 0.4);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: var(--color-primary);
+            padding: 12px 32px;
+            border: 2px solid var(--color-primary);
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .btn-secondary:hover {
+            background: var(--color-primary);
+            color: var(--bg-primary);
+            transform: translateY(-2px);
+        }
+        
+        .scenario-tab {
+            padding: 16px 32px;
+            border-radius: 12px;
+            background: rgba(184, 134, 11, 0.1);
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        
+        .scenario-tab:hover {
+            background: rgba(184, 134, 11, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .scenario-tab.active {
+            background: var(--color-primary);
+            color: var(--bg-primary);
+            border-color: var(--color-primary);
+        }
+        
+        .scenario-content {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        
+        .scenario-content.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .timeline-container {
+            position: relative;
+            padding: 20px 0;
+        }
+        
+        .timeline-item {
+            display: flex;
+            margin-bottom: 40px;
+            opacity: 0;
+            transform: translateX(-30px);
+        }
+        
+        .timeline-item.revealed {
+            opacity: 1;
+            transform: translateX(0);
+            transition: all 0.6s ease;
+        }
+        
+        .timeline-marker {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--color-accent);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 24px;
+            flex-shrink: 0;
+            position: relative;
+        }
+        
+        .timeline-marker::after {
+            content: '';
+            position: absolute;
+            top: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 40px;
+            background: var(--color-primary);
+        }
+        
+        .timeline-item:last-child .timeline-marker::after {
+            display: none;
+        }
+        
+        .timeline-content {
+            flex: 1;
+            background: rgba(250, 250, 250, 0.05);
+            padding: 24px;
+            border-radius: 12px;
+            border: 1px solid rgba(184, 134, 11, 0.2);
+        }
+        
+        .case-card {
+            background: linear-gradient(135deg, rgba(184, 134, 11, 0.1), rgba(255, 107, 53, 0.1));
+            border-radius: 16px;
+            padding: 24px;
+            border: 1px solid rgba(184, 134, 11, 0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .case-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 30px rgba(184, 134, 11, 0.2);
+            border-color: var(--color-primary);
+        }
+        
+        .filter-btn {
+            padding: 8px 16px;
+            border-radius: 20px;
+            background: rgba(184, 134, 11, 0.1);
+            border: 1px solid rgba(184, 134, 11, 0.3);
+            color: var(--text-light);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+        
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--color-primary);
+            color: var(--bg-primary);
+            border-color: var(--color-primary);
+        }
+        
+        .case-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 24px;
+            margin-top: 24px;
+        }
+        
+        .case-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        
+        .case-modal.active {
+            display: flex;
+        }
+        
+        .case-modal-content {
+            background: var(--bg-primary);
+            border-radius: 16px;
+            padding: 32px;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            border: 1px solid rgba(184, 134, 11, 0.3);
+        }
+        
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+        
+        .scroll-reveal.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .metric-card {
+            background: rgba(250, 250, 250, 0.05);
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+            border: 1px solid rgba(184, 134, 11, 0.2);
+        }
+        
+        .metric-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--color-accent);
+            margin-bottom: 8px;
+        }
+        
+        .pain-point-item {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 16px;
+        }
+        
+        .solution-item {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 16px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 nav-blur">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="font-heading text-xl font-bold gradient-text">
+                        智能安防系统
+                    </a>
+                </div>
+                
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="index.html" class="text-gray-300 hover:text-yellow-400 transition-colors">首页</a>
+                        <a href="features.html" class="text-gray-300 hover:text-yellow-400 transition-colors">核心功能</a>
+                        <a href="technology.html" class="text-gray-300 hover:text-yellow-400 transition-colors">技术优势</a>
+                        <a href="solutions.html" class="text-white hover:text-yellow-400 transition-colors font-medium">行业方案</a>
+                        <a href="about.html" class="text-gray-300 hover:text-yellow-400 transition-colors">关于我们</a>
+                        <a href="contact.html" class="text-gray-300 hover:text-yellow-400 transition-colors">联系我们</a>
+                    </div>
+                </div>
+                
+                <div class="hidden md:block">
+                    <a href="contact.html" class="btn-primary">获取方案</a>
+                </div>
+                
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="text-white hover:text-yellow-400">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="md:hidden hidden">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-gray-900 bg-opacity-95">
+                <a href="index.html" class="text-gray-300 hover:text-white block px-3 py-2">首页</a>
+                <a href="features.html" class="text-gray-300 hover:text-white block px-3 py-2">核心功能</a>
+                <a href="technology.html" class="text-gray-300 hover:text-white block px-3 py-2">技术优势</a>
+                <a href="solutions.html" class="text-white block px-3 py-2 font-medium">行业方案</a>
+                <a href="about.html" class="text-gray-300 hover:text-white block px-3 py-2">关于我们</a>
+                <a href="contact.html" class="text-gray-300 hover:text-white block px-3 py-2">联系我们</a>
+                <div class="px-3 py-2">
+                    <a href="contact.html" class="btn-primary w-full text-center block">获取方案</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-24 pb-16 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h1 class="font-heading text-5xl font-bold mb-6">
+                    每一个场景
+                    <span class="gradient-text block mt-2">都有专属的安防方案</span>
+                </h1>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">
+                    从千年古建到现代园区，我们都能提供完美守护。深度理解行业特性，量身定制最优解决方案
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Scenario Tabs -->
+    <section class="py-12 bg-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-4 mb-12">
+                <div class="scenario-tab active" data-scenario="heritage">
+                    <div class="w-12 h-12 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                        </svg>
+                    </div>
+                    <h3 class="font-heading text-lg font-bold">古村落/文物保护</h3>
+                    <p class="text-sm text-gray-400 mt-1">专家级守护</p>
+                </div>
+                
+                <div class="scenario-tab" data-scenario="campus">
+                    <div class="w-12 h-12 bg-gradient-to-r from-blue-500 to-green-500 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                        </svg>
+                    </div>
+                    <h3 class="font-heading text-lg font-bold">企业园区</h3>
+                    <p class="text-sm text-gray-400 mt-1">智能管理</p>
+                </div>
+                
+                <div class="scenario-tab" data-scenario="school">
+                    <div class="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                        </svg>
+                    </div>
+                    <h3 class="font-heading text-lg font-bold">智慧校园</h3>
+                    <p class="text-sm text-gray-400 mt-1">安全守护</p>
+                </div>
+                
+                <div class="scenario-tab" data-scenario="commercial">
+                    <div class="w-12 h-12 bg-gradient-to-r from-red-500 to-orange-500 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="font-heading text-lg font-bold">商业综合体</h3>
+                    <p class="text-sm text-gray-400 mt-1">运营保障</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Heritage Protection Scenario (Default) -->
+    <section id="heritage-content" class="scenario-content active py-20 bg-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Story Section -->
+            <div class="text-center mb-16 scroll-reveal">
+                <h2 class="font-heading text-4xl font-bold mb-6">一个村落的重生</h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">
+                    从濒临火灾威胁到获得全方位守护，见证千年古村如何在现代科技的护航下焕发新生
+                </p>
+            </div>
+            
+            <!-- Timeline -->
+            <div class="timeline-container mb-16">
+                <div class="timeline-item">
+                    <div class="timeline-marker">前</div>
+                    <div class="timeline-content">
+                        <h3 class="font-heading text-2xl font-bold mb-3 text-red-400">部署前：危机四伏</h3>
+                        <div class="grid md:grid-cols-3 gap-4">
+                            <div class="pain-point-item">
+                                <h4 class="font-bold mb-2">火灾风险高</h4>
+                                <p class="text-sm text-gray-300">木质结构古建筑，电线老化，游客吸烟等隐患</p>
+                            </div>
+                            <div class="pain-point-item">
+                                <h4 class="font-bold mb-2">监控盲区多</h4>
+                                <p class="text-sm text-gray-300">传统监控覆盖不足，夜间几乎失效</p>
+                            </div>
+                            <div class="pain-point-item">
+                                <h4 class="font-bold mb-2">响应滞后</h4>
+                                <p class="text-sm text-gray-300">人工巡查，发现问题时往往为时已晚</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-marker">中</div>
+                    <div class="timeline-content">
+                        <h3 class="font-heading text-2xl font-bold mb-3 text-yellow-400">部署中：专业施工</h3>
+                        <div class="grid md:grid-cols-3 gap-4">
+                            <div class="solution-item">
+                                <h4 class="font-bold mb-2">零破坏安装</h4>
+                                <p class="text-sm text-gray-300">无线传输，不破坏古建结构</p>
+                            </div>
+                            <div class="solution-item">
+                                <h4 class="font-bold mb-2">专家指导</h4>
+                                <p class="text-sm text-gray-300">文物保护专家现场监督施工</p>
+                            </div>
+                            <div class="solution-item">
+                                <h4 class="font-bold mb-2">快速部署</h4>
+                                <p class="text-sm text-gray-300">30分钟完成单点安装调试</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-marker">后</div>
+                    <div class="timeline-content">
+                        <h3 class="font-heading text-2xl font-bold mb-3 text-green-400">部署后：高枕无忧</h3>
+                        <div class="grid md:grid-cols-3 gap-4">
+                            <div class="metric-card">
+                                <div class="metric-number">0</div>
+                                <p class="text-gray-400">火灾事故</p>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-number">1.8s</div>
+                                <p class="text-gray-400">平均响应</p>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-number">98%</div>
+                                <p class="text-gray-400">满意度</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Real Cases -->
+            <div class="mb-16">
+                <h3 class="font-heading text-3xl font-bold text-center mb-12">真实案例</h3>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="case-card" data-case="hongcun">
+                        <div class="relative mb-4">
+                            <img src="https://kimi-web-img.moonshot.cn/img/img.bytravel.cn/d28e074b697194b431297bd5ed3594524e5df4eb.jpg" alt="黄山宏村" class="w-full h-48 object-cover rounded-lg">
+                            <div class="absolute top-4 left-4 bg-yellow-600 text-white px-3 py-1 rounded-full text-sm font-bold">世界文化遗产</div>
+                        </div>
+                        <h4 class="font-heading text-xl font-bold mb-2">黄山宏村</h4>
+                        <p class="text-gray-400 mb-4">明清古建筑群，200+监控点位，24小时智能守护</p>
+                        <div class="flex justify-between text-sm">
+                            <span class="text-gray-500">监控点位</span>
+                            <span class="text-yellow-400 font-bold">200+</span>
+                        </div>
+                    </div>
+                    
+                    <div class="case-card" data-case="xidi">
+                        <div class="relative mb-4">
+                            <img src="https://kimi-web-img.moonshot.cn/img/www.sinowh.org.cn/ae548cd4e920c8a8170a205bdbc3ec8da0083272" alt="西递古村" class="w-full h-48 object-cover rounded-lg">
+                            <div class="absolute top-4 left-4 bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-bold">5A景区</div>
+                        </div>
+                        <h4 class="font-heading text-xl font-bold mb-2">西递古村</h4>
+                        <p class="text-gray-400 mb-4">徽派建筑典范，零事故运行3年</p>
+                        <div class="flex justify-between text-sm">
+                            <span class="text-gray-500">安全运行</span>
+                            <span class="text-blue-400 font-bold">3年</span>
+                        </div>
+                    </div>
+                    
+                    <div class="case-card" data-case="museum">
+                        <div class="relative mb-4">
+                            <img src="https://kimi-web-img.moonshot.cn/img/www.sinowh.org.cn/a3a1c26c88be1c13406d6555274f1de7e2cfc2ee" alt="博物馆" class="w-full h-48 object-cover rounded-lg">
+                            <div class="absolute top-4 left-4 bg-green-600 text-white px-3 py-1 rounded-full text-sm font-bold">国家一级</div>
+                        </div>
+                        <h4 class="font-heading text-xl font-bold mb-2">故宫博物院分馆</h4>
+                        <p class="text-gray-400 mb-4">珍贵文物防护，零误报记录</p>
+                        <div class="flex justify-between text-sm">
+                            <span class="text-gray-500">误报率</span>
+                            <span class="text-green-400 font-bold">0%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Download Whitepaper -->
+            <div class="text-center">
+                <div class="bg-gradient-to-r from-gray-800 to-gray-700 rounded-2xl p-8">
+                    <h3 class="font-heading text-2xl font-bold mb-4">《文物建筑低破坏施工指南》</h3>
+                    <p class="text-gray-400 mb-6">专业白皮书，详细介绍如何在文物保护前提下进行安防系统部署</p>
+                    <button class="btn-primary" onclick="downloadWhitepaper()">免费下载 PDF</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Campus Scenario -->
+    <section id="campus-content" class="scenario-content py-20 bg-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 scroll-reveal">
+                <h2 class="font-heading text-4xl font-bold mb-6">从被动查监控到主动防御</h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">
+                    企业园区面积大、监控点位多，传统人工巡查效率低。智能安防系统实现主动预警，让安保工作更高效
+                </p>
+            </div>
+            
+            <div class="grid lg:grid-cols-2 gap-12 items-center mb-16">
+                <div class="scroll-reveal">
+                    <img src="https://kimi-web-img.moonshot.cn/img/image2.znzmo.com/14c7ec1a889ff69dbf04b6f6fbdcc6edbe0c149d.jpeg" alt="企业园区" class="w-full h-64 object-cover rounded-2xl">
+                </div>
+                <div class="scroll-reveal">
+                    <h3 class="font-heading text-2xl font-bold mb-6">痛点清单</h3>
+                    <div class="space-y-4">
+                        <div class="pain-point-item">
+                            <h4 class="font-bold mb-2">园区面积大，人工巡查效率低</h4>
+                            <p class="text-sm text-gray-300">数千亩园区，数百个监控点，人工巡查需要数小时</p>
+                        </div>
+                        <div class="pain-point-item">
+                            <h4 class="font-bold mb-2">访客管理混乱，安全隐患多</h4>
+                            <p class="text-sm text-gray-300">访客身份核验困难，车辆进出管理复杂</p>
+                        </div>
+                        <div class="pain-point-item">
+                            <h4 class="font-bold mb-2">传统监控只能事后追溯</h4>
+                            <p class="text-sm text-gray-300">发现问题时往往为时已晚，无法及时处置</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8 mb-16">
+                <div class="metric-card scroll-reveal">
+                    <div class="metric-number">60%</div>
+                    <p class="text-gray-400">安防人力成本降低</p>
+                </div>
+                <div class="metric-card scroll-reveal">
+                    <div class="metric-number">80%</div>
+                    <p class="text-gray-400">安全事件响应时间缩短</p>
+                </div>
+                <div class="metric-card scroll-reveal">
+                    <div class="metric-number">3倍</div>
+                    <p class="text-gray-400">访客通行效率提升</p>
+                </div>
+            </div>
+            
+            <div class="bg-gradient-to-r from-gray-700 to-gray-600 rounded-2xl p-8 text-center">
+                <h3 class="font-heading text-2xl font-bold mb-4">准备好升级您的园区安防了吗？</h3>
+                <p class="text-gray-300 mb-6">联系我们获取专属的企业园区安防解决方案</p>
+                <a href="contact.html" class="btn-primary">获取企业方案</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- School Scenario -->
+    <section id="school-content" class="scenario-content py-20 bg-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 scroll-reveal">
+                <h2 class="font-heading text-4xl font-bold mb-6">守护书香之地的静默卫士</h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">
+                    校园安全责任重大，智能安防系统为师生提供全方位保护，让家长更放心
+                </p>
+            </div>
+            
+            <div class="grid lg:grid-cols-2 gap-12 items-center mb-16">
+                <div class="scroll-reveal">
+                    <h3 class="font-heading text-2xl font-bold mb-6">解决方案</h3>
+                    <div class="space-y-4">
+                        <div class="solution-item">
+                            <h4 class="font-bold mb-2">一键报警+视频联动</h4>
+                            <p class="text-sm text-gray-300">紧急情况一键触发，自动联动周边摄像头</p>
+                        </div>
+                        <div class="solution-item">
+                            <h4 class="font-bold mb-2">访客管理+学生轨迹追踪</h4>
+                            <p class="text-sm text-gray-300">人脸识别门禁，实时掌握学生动态</p>
+                        </div>
+                        <div class="solution-item">
+                            <h4 class="font-bold mb-2">消防预警+应急广播</h4>
+                            <p class="text-sm text-gray-300">智能烟感联动，应急疏散自动指引</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="scroll-reveal">
+                    <img src="https://kimi-web-img.moonshot.cn/img/cdymqf.com/647014753d1675c87eb4cf1cf58ed3e47ddf2256.jpg" alt="智慧校园" class="w-full h-64 object-cover rounded-2xl">
+                </div>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8 mb-16">
+                <div class="metric-card scroll-reveal">
+                    <div class="metric-number">0</div>
+                    <p class="text-gray-400">安全事件发生</p>
+                </div>
+                <div class="metric-card scroll-reveal">
+                    <div class="metric-number">70%</div>
+                    <p class="text-gray-400">应急演练效率提升</p>
+                </div>
+                <div class="metric-card scroll-reveal">
+                    <div class="metric-number">98%</div>
+                    <p class="text-gray-400">家长满意度</p>
+                </div>
+            </div>
+            
+            <div class="bg-gradient-to-r from-gray-700 to-gray-600 rounded-2xl p-8 text-center">
+                <h3 class="font-heading text-2xl font-bold mb-4">为校园安全保驾护航</h3>
+                <p class="text-gray-300 mb-6">让每个孩子都能在安全的环境中成长</p>
+                <a href="contact.html" class="btn-primary">了解校园方案</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Commercial Scenario -->
+    <section id="commercial-content" class="scenario-content py-20 bg-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 scroll-reveal">
+                <h2 class="font-heading text-4xl font-bold mb-6">人流密集地的智能安全大脑</h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">
+                    商业综合体人流量大，安全隐患多。智能安防系统提供全方位监控，确保运营安全
+                </p>
+            </div>
+            
+            <div class="grid lg:grid-cols-2 gap-12 items-center mb-16">
+                <div class="scroll-reveal">
+                    <img src="https://kimi-web-img.moonshot.cn/img/www.scensmart.com/5eb8f84594af7ca8172a4c98d411c650563a7b80.jpg" alt="商业综合体" class="w-full h-64 object-cover rounded-2xl">
+                </div>
+                <div class="scroll-reveal">
+                    <h3 class="font-heading text-2xl font-bold mb-6">核心功能</h3>
+                    <div class="space-y-4">
+                        <div class="solution-item">
+                            <h4 class="font-bold mb-2">客流分析+拥堵预警</h4>
+                            <p class="text-sm text-gray-300">实时监测人流密度，自动预警拥堵风险</p>
+                        </div>
+                        <div class="solution-item">
+                            <h4 class="font-bold mb-2">重点商户+智能巡更</h4>
+                            <p class="text-sm text-gray-300">AI巡更机器人，24小时不间断巡逻</p>
+                        </div>
+                        <div class="solution-item">
+                            <h4 class="font-bold mb-2">消防联动+疏散指引</h4>
+                            <p class="text-sm text-gray-300">智能应急疏散，确保人员安全撤离</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8 mb-16">
+                <div class="metric-card scroll-reveal">
+                    <div class="metric-number">90%</div>
+                    <p class="text-gray-400">盗窃案件下降</p>
+                </div>
+                <div class="metric-card scroll-reveal">
+                    <div class="metric-number">100%</div>
+                    <p class="text-gray-400">消防隐患提前预警</p>
+                </div>
+                <div class="metric-card scroll-reveal">
+                    <div class="metric-number">85%</div>
+                    <p class="text-gray-400">顾客安全感提升</p>
+                </div>
+            </div>
+            
+            <div class="bg-gradient-to-r from-gray-700 to-gray-600 rounded-2xl p-8 text-center">
+                <h3 class="font-heading text-2xl font-bold mb-4">提升商业综合体运营安全</h3>
+                <p class="text-gray-300 mb-6">让顾客安心购物，让商家放心经营</p>
+                <a href="contact.html" class="btn-primary">咨询商业方案</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Case Filter Section -->
+    <section class="py-20 bg-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="font-heading text-4xl font-bold mb-4">成功案例展示</h2>
+                <p class="text-xl text-gray-400">用真实案例证明我们的专业实力</p>
+            </div>
+            
+            <!-- Filter Buttons -->
+            <div class="flex flex-wrap justify-center gap-3 mb-8">
+                <button class="filter-btn active" data-filter="all">全部案例</button>
+                <button class="filter-btn" data-filter="heritage">文物保护</button>
+                <button class="filter-btn" data-filter="campus">企业园区</button>
+                <button class="filter-btn" data-filter="school">智慧校园</button>
+                <button class="filter-btn" data-filter="commercial">商业综合体</button>
+            </div>
+            
+            <!-- Case Grid -->
+            <div class="case-grid" id="case-grid">
+                <!-- Cases will be populated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Case Modal -->
+    <div id="case-modal" class="case-modal">
+        <div class="case-modal-content">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="font-heading text-2xl font-bold" id="modal-title">案例详情</h3>
+                <button id="close-modal" class="text-gray-400 hover:text-white text-2xl">&times;</button>
+            </div>
+            <div id="modal-body">
+                <!-- Modal content will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 border-t border-gray-800 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <div class="font-heading text-2xl font-bold gradient-text mb-4">智能安防系统</div>
+                <p class="text-gray-400 mb-6">用科技守护文明</p>
+                
+                <div class="flex justify-center space-x-8 mb-8">
+                    <a href="index.html" class="text-gray-400 hover:text-white">首页</a>
+                    <a href="features.html" class="text-gray-400 hover:text-white">核心功能</a>
+                    <a href="technology.html" class="text-gray-400 hover:text-white">技术优势</a>
+                    <a href="solutions.html" class="text-gray-400 hover:text-white">行业方案</a>
+                    <a href="about.html" class="text-gray-400 hover:text-white">关于我们</a>
+                    <a href="contact.html" class="text-gray-400 hover:text-white">联系我们</a>
+                </div>
+                
+                <div class="border-t border-gray-800 pt-8">
+                    <p class="text-gray-500 text-sm">© 2024 智能安防系统. 保留所有权利. | 皖ICP备12345678号</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="main.js"></script>
+    <script>
+        // Solutions page specific JavaScript
+        document.addEventListener('DOMContentLoaded', function() {
+            initSolutionsPage();
+        });
+        
+        function initSolutionsPage() {
+            initScenarioTabs();
+            initTimelineAnimation();
+            initCaseFilter();
+            initCaseModal();
+            populateCaseGrid();
+        }
+        
+        // Scenario Tabs
+        function initScenarioTabs() {
+            const tabs = document.querySelectorAll('.scenario-tab');
+            const contents = document.querySelectorAll('.scenario-content');
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const scenario = this.dataset.scenario;
+                    
+                    // Update tabs
+                    tabs.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Update content
+                    contents.forEach(content => {
+                        content.classList.remove('active');
+                        if (content.id === scenario + '-content') {
+                            content.classList.add('active');
+                        }
+                    });
+                    
+                    // Track event
+                    trackEvent('scenario_tab_switched', { scenario });
+                });
+            });
+        }
+        
+        // Timeline Animation
+        function initTimelineAnimation() {
+            const timelineItems = document.querySelectorAll('.timeline-item');
+            
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        setTimeout(() => {
+                            entry.target.classList.add('revealed');
+                        }, index * 200);
+                    }
+                });
+            }, { threshold: 0.3 });
+            
+            timelineItems.forEach(item => {
+                observer.observe(item);
+            });
+        }
+        
+        // Case Filter
+        function initCaseFilter() {
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const filter = this.dataset.filter;
+                    
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    filterCases(filter);
+                });
+            });
+        }
+        
+        function filterCases(filter) {
+            const caseCards = document.querySelectorAll('.case-card');
+            
+            caseCards.forEach(card => {
+                if (filter === 'all' || card.dataset.category === filter) {
+                    card.style.display = 'block';
+                    anime({
+                        targets: card,
+                        opacity: [0, 1],
+                        scale: [0.9, 1],
+                        duration: 300,
+                        easing: 'easeOutQuad'
+                    });
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+        
+        // Case Modal
+        function initCaseModal() {
+            const modal = document.getElementById('case-modal');
+            const closeBtn = document.getElementById('close-modal');
+            const caseCards = document.querySelectorAll('.case-card');
+            
+            caseCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    const caseId = this.dataset.case;
+                    showCaseModal(caseId);
+                });
+            });
+            
+            closeBtn.addEventListener('click', function() {
+                modal.classList.remove('active');
+            });
+            
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    modal.classList.remove('active');
+                }
+            });
+        }
+        
+        function showCaseModal(caseId) {
+            const modal = document.getElementById('case-modal');
+            const modalTitle = document.getElementById('modal-title');
+            const modalBody = document.getElementById('modal-body');
+            
+            const caseData = getCaseData(caseId);
+            
+            modalTitle.textContent = caseData.title;
+            modalBody.innerHTML = caseData.content;
+            
+            modal.classList.add('active');
+        }
+        
+        function getCaseData(caseId) {
+            const cases = {
+                hongcun: {
+                    title: '黄山宏村古建筑群智能安防项目',
+                    content: `
+                        <div class="space-y-6">
+                            <img src="https://kimi-web-img.moonshot.cn/img/img.bytravel.cn/d28e074b697194b431297bd5ed3594524e5df4eb.jpg" alt="黄山宏村" class="w-full h-64 object-cover rounded-lg">
+                            <div class="grid md:grid-cols-2 gap-6">
+                                <div>
+                                    <h4 class="font-bold mb-3">项目背景</h4>
+                                    <p class="text-gray-300 mb-4">黄山宏村是世界文化遗产，拥有大量明清时期的古建筑。由于建筑多为木质结构，火灾风险极高。传统监控覆盖不足，响应滞后。</p>
+                                    <h4 class="font-bold mb-3">解决方案</h4>
+                                    <ul class="text-gray-300 space-y-2">
+                                        <li>• 部署200+智能监控点位</li>
+                                        <li>• AI火灾识别，准确率99%</li>
+                                        <li>• 零破坏施工，保护古建完整</li>
+                                        <li>• 3秒响应，自动报警</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold mb-3">项目成果</h4>
+                                    <div class="space-y-4">
+                                        <div class="bg-green-900 bg-opacity-30 p-4 rounded-lg">
+                                            <div class="text-2xl font-bold text-green-400">0</div>
+                                            <div class="text-sm text-gray-400">火灾事故(3年)</div>
+                                        </div>
+                                        <div class="bg-blue-900 bg-opacity-30 p-4 rounded-lg">
+                                            <div class="text-2xl font-bold text-blue-400">1.8s</div>
+                                            <div class="text-sm text-gray-400">平均响应时间</div>
+                                        </div>
+                                        <div class="bg-yellow-900 bg-opacity-30 p-4 rounded-lg">
+                                            <div class="text-2xl font-bold text-yellow-400">98%</div>
+                                            <div class="text-sm text-gray-400">客户满意度</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-gray-700 p-4 rounded-lg">
+                                <h4 class="font-bold mb-2">客户证言</h4>
+                                <p class="text-gray-300 italic">"这套系统让我们真正实现了24小时无忧守护，文物保护工作更加得心应手。" - 宏村管理处主任</p>
+                            </div>
+                        </div>
+                    `
+                },
+                xidi: {
+                    title: '西递古村智能安防升级项目',
+                    content: `
+                        <div class="space-y-6">
+                            <img src="https://kimi-web-img.moonshot.cn/img/www.sinowh.org.cn/ae548cd4e920c8a8170a205bdbc3ec8da0083272" alt="西递古村" class="w-full h-64 object-cover rounded-lg">
+                            <div class="grid md:grid-cols-2 gap-6">
+                                <div>
+                                    <h4 class="font-bold mb-3">项目概述</h4>
+                                    <p class="text-gray-300 mb-4">西递古村是5A级景区，年接待游客超过200万人次。安全压力巨大，需要智能系统提升管理效率。</p>
+                                    <h4 class="font-bold mb-3">核心优势</h4>
+                                    <ul class="text-gray-300 space-y-2">
+                                        <li>• 游客行为分析</li>
+                                        <li>• 拥挤预警机制</li>
+                                        <li>• 文物保护监控</li>
+                                        <li>• 应急指挥系统</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold mb-3">运营数据</h4>
+                                    <div class="space-y-4">
+                                        <div class="bg-green-900 bg-opacity-30 p-4 rounded-lg">
+                                            <div class="text-2xl font-bold text-green-400">200万+</div>
+                                            <div class="text-sm text-gray-400">年接待游客</div>
+                                        </div>
+                                        <div class="bg-blue-900 bg-opacity-30 p-4 rounded-lg">
+                                            <div class="text-2xl font-bold text-blue-400">3年</div>
+                                            <div class="text-sm text-gray-400">零事故运营</div>
+                                        </div>
+                                        <div class="bg-purple-900 bg-opacity-30 p-4 rounded-lg">
+                                            <div class="text-2xl font-bold text-purple-400">95%</div>
+                                            <div class="text-sm text-gray-400">游客满意度</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `
+                },
+                museum: {
+                    title: '故宫博物院分馆文物防护项目',
+                    content: `
+                        <div class="space-y-6">
+                            <img src="https://kimi-web-img.moonshot.cn/img/www.sinowh.org.cn/a3a1c26c88be1c13406d6555274f1de7e2cfc2ee" alt="博物馆" class="w-full h-64 object-cover rounded-lg">
+                            <div class="grid md:grid-cols-2 gap-6">
+                                <div>
+                                    <h4 class="font-bold mb-3">项目挑战</h4>
+                                    <p class="text-gray-300 mb-4">国家一级博物馆，收藏大量珍贵文物。对安防系统要求极高，不能有任何误报和漏报。</p>
+                                    <h4 class="font-bold mb-3">技术方案</h4>
+                                    <ul class="text-gray-300 space-y-2">
+                                        <li>• 多重AI算法融合</li>
+                                        <li>• 高精度传感器阵列</li>
+                                        <li>• 环境自适应调节</li>
+                                        <li>• 专家级规则配置</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold mb-3">防护效果</h4>
+                                    <div class="space-y-4">
+                                        <div class="bg-green-900 bg-opacity-30 p-4 rounded-lg">
+                                            <div class="text-2xl font-bold text-green-400">0%</div>
+                                            <div class="text-sm text-gray-400">误报率</div>
+                                        </div>
+                                        <div class="bg-blue-900 bg-opacity-30 p-4 rounded-lg">
+                                            <div class="text-2xl font-bold text-blue-400">100%</div>
+                                            <div class="text-sm text-gray-400">威胁检出率</div>
+                                        </div>
+                                        <div class="bg-red-900 bg-opacity-30 p-4 rounded-lg">
+                                            <div class="text-2xl font-bold text-red-400">1.2s</div>
+                                            <div class="text-sm text-gray-400">平均响应</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `
+                }
+            };
+            
+            return cases[caseId] || { title: '案例详情', content: '<p>案例详情加载中...</p>' };
+        }
+        
+        // Populate Case Grid
+        function populateCaseGrid() {
+            const grid = document.getElementById('case-grid');
+            const cases = [
+                { id: 'hongcun', category: 'heritage', title: '黄山宏村古建筑群', location: '安徽黄山', image: 'https://kimi-web-img.moonshot.cn/img/img.bytravel.cn/d28e074b697194b431297bd5ed3594524e5df4eb.jpg' },
+                { id: 'xidi', category: 'heritage', title: '西递古村智能安防', location: '安徽黄山', image: 'https://kimi-web-img.moonshot.cn/img/www.sinowh.org.cn/ae548cd4e920c8a8170a205bdbc3ec8da0083272' },
+                { id: 'museum', category: 'heritage', title: '故宫博物院分馆', location: '北京', image: 'https://kimi-web-img.moonshot.cn/img/www.sinowh.org.cn/a3a1c26c88be1c13406d6555274f1de7e2cfc2ee' },
+                { id: 'tech-park', category: 'campus', title: '合肥高新区科技园', location: '安徽合肥', image: 'https://kimi-web-img.moonshot.cn/img/image2.znzmo.com/14c7ec1a889ff69dbf04b6f6fbdcc6edbe0c149d.jpeg' },
+                { id: 'university', category: 'school', title: '中国科学技术大学', location: '安徽合肥', image: 'https://kimi-web-img.moonshot.cn/img/cdymqf.com/647014753d1675c87eb4cf1cf58ed3e47ddf2256.jpg' },
+                { id: 'mall', category: 'commercial', title: '合肥万达广场', location: '安徽合肥', image: 'https://kimi-web-img.moonshot.cn/img/www.scensmart.com/5eb8f84594af7ca8172a4c98d411c650563a7b80.jpg' }
+            ];
+            
+            cases.forEach(caseData => {
+                const card = document.createElement('div');
+                card.className = 'case-card';
+                card.dataset.case = caseData.id;
+                card.dataset.category = caseData.category;
+                
+                card.innerHTML = `
+                    <div class="relative mb-4">
+                        <img src="${caseData.image}" alt="${caseData.title}" class="w-full h-48 object-cover rounded-lg">
+                        <div class="absolute top-4 left-4 bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-bold">${caseData.location}</div>
+                    </div>
+                    <h4 class="font-heading text-xl font-bold mb-2">${caseData.title}</h4>
+                    <p class="text-gray-400">点击查看详细案例</p>
+                `;
+                
+                grid.appendChild(card);
+            });
+        }
+        
+        // Download Whitepaper
+        function downloadWhitepaper() {
+            alert('《文物建筑低破坏施工指南》PDF下载链接已发送到您的邮箱，请查收！');
+            trackEvent('whitepaper_downloaded');
+        }
+    </script>
+</body>
+</html>
