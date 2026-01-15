@@ -1,0 +1,7 @@
+# 项目文档（本地保留，不推送）
+*.md
+!docs/*.md
+!docs/**/*.md
+
+# VS Code
+.vscode/
