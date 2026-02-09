@@ -1,0 +1,186 @@
+/* 懒加载图片样式 */
+
+/* 未加载状态 */
+img.lazy,
+[data-bg].lazy {
+    opacity: 0;
+    transition: opacity 0.3s ease-in;
+}
+
+/* 加载中状态 */
+img.loading {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s ease-in-out infinite;
+}
+
+@keyframes loading {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+/* 已加载状态 */
+img.loaded {
+    opacity: 1;
+    animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* 加载失败状态 */
+img.error {
+    opacity: 0.5;
+    background: #f5f5f5;
+    border: 1px dashed #ccc;
+}
+
+/* 占位符样式 */
+img.lazy::before {
+    content: '';
+    display: block;
+    padding-top: 56.25%; /* 16:9 比例 */
+    background: #f0f0f0;
+}
+
+/* 模糊加载效果（可选） */
+img.lazy-blur {
+    filter: blur(10px);
+    transition: filter 0.3s ease-in;
+}
+
+img.lazy-blur.loaded {
+    filter: blur(0);
+}
+
+/* 渐进式加载效果 */
+.progressive-image {
+    position: relative;
+    overflow: hidden;
+}
+
+.progressive-image img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.progressive-image .placeholder {
+    filter: blur(20px);
+    transform: scale(1.1);
+}
+
+.progressive-image .full-image {
+    opacity: 0;
+    transition: opacity 0.5s ease-in;
+}
+
+.progressive-image .full-image.loaded {
+    opacity: 1;
+}
+
+/* 骨架屏效果 */
+.skeleton {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: skeleton-loading 1.5s ease-in-out infinite;
+}
+
+@keyframes skeleton-loading {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+/* 响应式图片容器 */
+.responsive-image-container {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
+.responsive-image-container::before {
+    content: '';
+    display: block;
+    padding-top: 56.25%; /* 默认 16:9 */
+}
+
+.responsive-image-container.ratio-1-1::before {
+    padding-top: 100%; /* 1:1 */
+}
+
+.responsive-image-container.ratio-4-3::before {
+    padding-top: 75%; /* 4:3 */
+}
+
+.responsive-image-container.ratio-21-9::before {
+    padding-top: 42.86%; /* 21:9 */
+}
+
+.responsive-image-container img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* 加载指示器 */
+.image-loader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 40px;
+    height: 40px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #3498db;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.loading .image-loader {
+    opacity: 1;
+}
+
+@keyframes spin {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* 打印时显示所有图片 */
+@media print {
+    img.lazy,
+    [data-bg].lazy {
+        opacity: 1;
+    }
+}
+
+/* 减少动画效果（用户偏好） */
+@media (prefers-reduced-motion: reduce) {
+    img.lazy,
+    img.loaded,
+    .progressive-image .full-image {
+        transition: none;
+        animation: none;
+    }
+}

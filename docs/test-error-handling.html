@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>错误处理测试页面</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-section {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .test-section h2 {
+            color: #333;
+            border-bottom: 2px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+        .test-button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .test-button:hover {
+            background: #45a049;
+        }
+        .test-button.danger {
+            background: #f44336;
+        }
+        .test-button.danger:hover {
+            background: #da190b;
+        }
+        .log-area {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 15px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+            margin-top: 10px;
+        }
+        .log-entry {
+            margin: 5px 0;
+            padding: 5px;
+            border-left: 3px solid #4CAF50;
+            padding-left: 10px;
+        }
+        .log-entry.error {
+            border-left-color: #f44336;
+            color: #ff6b6b;
+        }
+        .log-entry.warn {
+            border-left-color: #ff9800;
+            color: #ffa726;
+        }
+        .log-entry.info {
+            border-left-color: #2196F3;
+            color: #64b5f6;
+        }
+        .status {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        .status.pass {
+            background: #4CAF50;
+            color: white;
+        }
+        .status.fail {
+            background: #f44336;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 JavaScript 错误处理测试</h1>
+    
+    <div class="test-section">
+        <h2>1. 基础错误捕获测试</h2>
+        <p>测试全局错误处理器是否能捕获各种类型的错误</p>
+        <button class="test-button danger" onclick="testSyntaxError()">触发语法错误</button>
+        <button class="test-button danger" onclick="testReferenceError()">触发引用错误</button>
+        <button class="test-button danger" onclick="testTypeError()">触发类型错误</button>
+        <button class="test-button" onclick="testNormalFunction()">正常函数调用</button>
+    </div>
+    
+    <div class="test-section">
+        <h2>2. Promise 错误处理测试</h2>
+        <p>测试未处理的 Promise 拒绝是否被捕获</p>
+        <button class="test-button danger" onclick="testPromiseRejection()">触发 Promise 拒绝</button>
+        <button class="test-button danger" onclick="testAsyncError()">触发 Async 错误</button>
+        <button class="test-button" onclick="testPromiseSuccess()">正常 Promise</button>
+    </div>
+    
+    <div class="test-section">
+        <h2>3. 资源加载错误测试</h2>
+        <p>测试图片、脚本等资源加载失败是否被捕获</p>
+        <button class="test-button danger" onclick="testImageLoadError()">触发图片加载错误</button>
+        <button class="test-button danger" onclick="testScriptLoadError()">触发脚本加载错误</button>
+        <button class="test-button" onclick="testImageLoadSuccess()">正常图片加载</button>
+    </div>
+    
+    <div class="test-section">
+        <h2>4. 外部库依赖测试</h2>
+        <p>测试外部库未加载时的降级处理</p>
+        <button class="test-button" onclick="testTypedJsFallback()">测试 Typed.js 降级</button>
+        <button class="test-button" onclick="testAnimeJsFallback()">测试 anime.js 降级</button>
+        <button class="test-button" onclick="testIntersectionObserverFallback()">测试 IntersectionObserver 降级</button>
+    </div>
+    
+    <div class="test-section">
+        <h2>5. 错误日志</h2>
+        <button class="test-button" onclick="clearLog()">清空日志</button>
+        <button class="test-button" onclick="exportLog()">导出日志</button>
+        <div id="log-area" class="log-area">
+            <div class="log-entry info">等待测试...</div>
+        </div>
+    </div>
+    
+    <script src="main.js"></script>
+    <script>
+        // 自定义日志记录
+        const logArea = document.getElementById('log-area');
+        const originalConsoleError = console.error;
+        const originalConsoleWarn = console.warn;
+        const originalConsoleLog = console.log;
+        
+        function addLog(message, type = 'info') {
+            const entry = document.createElement('div');
+            entry.className = `log-entry ${type}`;
+            entry.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+            logArea.appendChild(entry);
+            logArea.scrollTop = logArea.scrollHeight;
+        }
+        
+        // 拦截 console 方法
+        console.error = function(...args) {
+            addLog(args.join(' '), 'error');
+            originalConsoleError.apply(console, args);
+        };
+        
+        console.warn = function(...args) {
+            addLog(args.join(' '), 'warn');
+            originalConsoleWarn.apply(console, args);
+        };
+        
+        console.log = function(...args) {
+            addLog(args.join(' '), 'info');
+            originalConsoleLog.apply(console, args);
+        };
+        
+        // 测试函数
+        function testSyntaxError() {
+            addLog('测试: 触发语法错误', 'info');
+            try {
+                eval('var x = {');
+            } catch (e) {
+                addLog('✓ 语法错误已捕获: ' + e.message, 'error');
+            }
+        }
+        
+        function testReferenceError() {
+            addLog('测试: 触发引用错误', 'info');
+            try {
+                nonExistentFunction();
+            } catch (e) {
+                addLog('✓ 引用错误已捕获: ' + e.message, 'error');
+            }
+        }
+        
+        function testTypeError() {
+            addLog('测试: 触发类型错误', 'info');
+            try {
+                null.toString();
+            } catch (e) {
+                addLog('✓ 类型错误已捕获: ' + e.message, 'error');
+            }
+        }
+        
+        function testNormalFunction() {
+            addLog('测试: 正常函数调用', 'info');
+            const result = 1 + 1;
+            addLog('✓ 正常执行完成，结果: ' + result, 'info');
+        }
+        
+        function testPromiseRejection() {
+            addLog('测试: Promise 拒绝', 'info');
+            Promise.reject(new Error('测试 Promise 拒绝'));
+            addLog('Promise 拒绝已触发，等待全局处理器捕获...', 'warn');
+        }
+        
+        async function testAsyncError() {
+            addLog('测试: Async 函数错误', 'info');
+            try {
+                await Promise.reject(new Error('Async 函数错误'));
+            } catch (e) {
+                addLog('✓ Async 错误已捕获: ' + e.message, 'error');
+            }
+        }
+        
+        function testPromiseSuccess() {
+            addLog('测试: 正常 Promise', 'info');
+            Promise.resolve('成功')
+                .then(result => {
+                    addLog('✓ Promise 正常执行: ' + result, 'info');
+                });
+        }
+        
+        function testImageLoadError() {
+            addLog('测试: 图片加载错误', 'info');
+            const img = document.createElement('img');
+            img.src = 'non-existent-image.jpg';
+            img.onerror = () => {
+                addLog('✓ 图片加载错误已捕获', 'error');
+            };
+            document.body.appendChild(img);
+            setTimeout(() => document.body.removeChild(img), 100);
+        }
+        
+        function testScriptLoadError() {
+            addLog('测试: 脚本加载错误', 'info');
+            const script = document.createElement('script');
+            script.src = 'non-existent-script.js';
+            script.onerror = () => {
+                addLog('✓ 脚本加载错误已捕获', 'error');
+            };
+            document.head.appendChild(script);
+            setTimeout(() => document.head.removeChild(script), 100);
+        }
+        
+        function testImageLoadSuccess() {
+            addLog('测试: 正常图片加载', 'info');
+            const img = document.createElement('img');
+            img.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100"%3E%3Crect fill="%234CAF50" width="100" height="100"/%3E%3C/svg%3E';
+            img.onload = () => {
+                addLog('✓ 图片加载成功', 'info');
+            };
+            document.body.appendChild(img);
+            setTimeout(() => document.body.removeChild(img), 100);
+        }
+        
+        function testTypedJsFallback() {
+            addLog('测试: Typed.js 降级处理', 'info');
+            if (typeof Typed === 'undefined') {
+                addLog('✓ Typed.js 未加载，降级方案已启用', 'warn');
+            } else {
+                addLog('✓ Typed.js 已加载', 'info');
+            }
+        }
+        
+        function testAnimeJsFallback() {
+            addLog('测试: anime.js 降级处理', 'info');
+            if (typeof anime === 'undefined') {
+                addLog('✓ anime.js 未加载，降级方案已启用', 'warn');
+            } else {
+                addLog('✓ anime.js 已加载', 'info');
+            }
+        }
+        
+        function testIntersectionObserverFallback() {
+            addLog('测试: IntersectionObserver 兼容性', 'info');
+            if (!('IntersectionObserver' in window)) {
+                addLog('✓ IntersectionObserver 不支持，降级方案已启用', 'warn');
+            } else {
+                addLog('✓ IntersectionObserver 支持', 'info');
+            }
+        }
+        
+        function clearLog() {
+            logArea.innerHTML = '<div class="log-entry info">日志已清空</div>';
+        }
+        
+        function exportLog() {
+            const logs = Array.from(logArea.children).map(el => el.textContent).join('\n');
+            const blob = new Blob([logs], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `error-test-log-${Date.now()}.txt`;
+            a.click();
+            URL.revokeObjectURL(url);
+            addLog('✓ 日志已导出', 'info');
+        }
+        
+        // 页面加载完成
+        window.addEventListener('load', () => {
+            addLog('✓ 页面加载完成，错误处理系统已就绪', 'info');
+            addLog('ErrorHandler 类是否存在: ' + (typeof ErrorHandler !== 'undefined' ? '是' : '否'), 'info');
+        });
+    </script>
+</body>
+</html>

@@ -18,18 +18,18 @@
     
     <style>
         :root {
-            --bg-primary: #0A1931;
-            --bg-secondary: #FAFAFA;
+            --bg-primary: #FFFFFF;
+            --bg-secondary: #F9FAFB;
             --color-primary: #B8860B;
             --color-accent: #FF6B35;
-            --text-dark: #0A1931;
-            --text-light: #FAFAFA;
+            --text-dark: #1F2937;
+            --text-light: #6B7280;
         }
         
         body {
             font-family: 'Noto Serif SC', 'Quattrocento Sans', serif;
             background-color: var(--bg-primary);
-            color: var(--text-light);
+            color: var(--text-dark);
         }
         
         .font-heading {
@@ -45,7 +45,8 @@
         
         .nav-blur {
             backdrop-filter: blur(10px);
-            background: rgba(10, 25, 49, 0.9);
+            background: rgba(255, 255, 255, 0.95);
+            border-bottom: 1px solid #E5E7EB;
         }
         
         .btn-primary {
@@ -77,12 +78,12 @@
         
         .btn-secondary:hover {
             background: var(--color-primary);
-            color: var(--bg-primary);
+            color: #FFFFFF;
             transform: translateY(-2px);
         }
         
         .mission-bg {
-            background: linear-gradient(135deg, rgba(184, 134, 11, 0.1), rgba(255, 107, 53, 0.1)), url('resources/team-with-heritage.png');
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(249, 250, 251, 0.9)), url('resources/team-with-heritage.png');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -145,7 +146,7 @@
         }
         
         .team-card {
-            background: linear-gradient(135deg, rgba(184, 134, 11, 0.1), rgba(255, 107, 53, 0.1));
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(249, 250, 251, 0.9));
             border-radius: 16px;
             padding: 32px;
             border: 1px solid rgba(184, 134, 11, 0.2);
@@ -319,12 +320,12 @@
                 
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-baseline space-x-8">
-                        <a href="index.html" class="text-gray-300 hover:text-yellow-400 transition-colors">首页</a>
-                        <a href="features.html" class="text-gray-300 hover:text-yellow-400 transition-colors">核心功能</a>
-                        <a href="technology.html" class="text-gray-300 hover:text-yellow-400 transition-colors">技术优势</a>
-                        <a href="solutions.html" class="text-gray-300 hover:text-yellow-400 transition-colors">行业方案</a>
-                        <a href="about.html" class="text-white hover:text-yellow-400 transition-colors font-medium">关于我们</a>
-                        <a href="contact.html" class="text-gray-300 hover:text-yellow-400 transition-colors">联系我们</a>
+                        <a href="index.html" class="text-gray-700 hover:text-yellow-400 transition-colors">首页</a>
+                        <a href="features.html" class="text-gray-700 hover:text-yellow-400 transition-colors">核心功能</a>
+                        <a href="technology.html" class="text-gray-700 hover:text-yellow-400 transition-colors">技术优势</a>
+                        <a href="solutions.html" class="text-gray-700 hover:text-yellow-400 transition-colors">行业方案</a>
+                        <a href="about.html" class="text-gray-900 hover:text-yellow-400 transition-colors font-medium">关于我们</a>
+                        <a href="contact.html" class="text-gray-700 hover:text-yellow-400 transition-colors">联系我们</a>
                     </div>
                 </div>
                 
@@ -334,7 +335,7 @@
                 
                 <!-- Mobile menu button -->
                 <div class="md:hidden">
-                    <button id="mobile-menu-btn" class="text-white hover:text-yellow-400">
+                    <button id="mobile-menu-btn" class="text-gray-900 hover:text-yellow-400">
                         <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                         </svg>
@@ -345,13 +346,13 @@
         
         <!-- Mobile menu -->
         <div id="mobile-menu" class="md:hidden hidden">
-            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-gray-900 bg-opacity-95">
-                <a href="index.html" class="text-gray-300 hover:text-white block px-3 py-2">首页</a>
-                <a href="features.html" class="text-gray-300 hover:text-white block px-3 py-2">核心功能</a>
-                <a href="technology.html" class="text-gray-300 hover:text-white block px-3 py-2">技术优势</a>
-                <a href="solutions.html" class="text-gray-300 hover:text-white block px-3 py-2">行业方案</a>
-                <a href="about.html" class="text-white block px-3 py-2 font-medium">关于我们</a>
-                <a href="contact.html" class="text-gray-300 hover:text-white block px-3 py-2">联系我们</a>
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-gray-50 bg-opacity-95">
+                <a href="index.html" class="text-gray-700 hover:text-gray-900 block px-3 py-2">首页</a>
+                <a href="features.html" class="text-gray-700 hover:text-gray-900 block px-3 py-2">核心功能</a>
+                <a href="technology.html" class="text-gray-700 hover:text-gray-900 block px-3 py-2">技术优势</a>
+                <a href="solutions.html" class="text-gray-700 hover:text-gray-900 block px-3 py-2">行业方案</a>
+                <a href="about.html" class="text-gray-900 block px-3 py-2 font-medium">关于我们</a>
+                <a href="contact.html" class="text-gray-700 hover:text-gray-900 block px-3 py-2">联系我们</a>
                 <div class="px-3 py-2">
                     <a href="contact.html" class="btn-primary w-full text-center block">加入我们</a>
                 </div>
@@ -361,7 +362,7 @@
 
     <!-- Mission Section -->
     <section class="mission-bg min-h-screen flex items-center relative">
-        <div class="absolute inset-0 bg-gradient-to-r from-gray-900 via-gray-900/80 to-transparent"></div>
+        <div class="absolute inset-0 bg-gradient-to-r from-white/95 via-white/85 to-transparent"></div>
         
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="grid lg:grid-cols-2 gap-12 items-center">
@@ -371,7 +372,7 @@
                             用科技
                             <span class="gradient-text block">守护文明</span>
                         </h1>
-                        <p class="text-xl text-gray-300 leading-relaxed">
+                        <p class="text-xl text-gray-700 leading-relaxed">
                             我们坚信，科技与文化的融合能够创造更美好的未来。通过先进的AI技术，
                             我们为珍贵的历史文化遗产提供全方位的智能防护，让千年文明在数字时代焕发新生。
                         </p>
@@ -380,11 +381,11 @@
                     <div class="grid grid-cols-2 gap-6">
                         <div class="stats-card">
                             <div class="stats-number">5</div>
-                            <p class="text-gray-400">年技术积累</p>
+                            <p class="text-gray-600">年技术积累</p>
                         </div>
                         <div class="stats-card">
                             <div class="stats-number">5</div>
-                            <p class="text-gray-400">项发明专利</p>
+                            <p class="text-gray-600">项发明专利</p>
                         </div>
                     </div>
                     
@@ -395,28 +396,28 @@
                 </div>
                 
                 <div class="scroll-reveal">
-                    <div class="bg-gray-800 bg-opacity-90 backdrop-blur-sm rounded-2xl p-8 border border-gray-700">
+                    <div class="bg-white bg-opacity-90 backdrop-blur-sm rounded-2xl p-8 border border-gray-300">
                         <h3 class="font-heading text-2xl font-bold mb-6">我们的愿景</h3>
                         <div class="space-y-4">
                             <div class="flex items-start space-x-3">
                                 <div class="w-6 h-6 bg-yellow-500 rounded-full flex-shrink-0 mt-1"></div>
                                 <div>
                                     <h4 class="font-bold mb-1">成为中国文物保护安防领域的领导者</h4>
-                                    <p class="text-gray-400 text-sm">在文物保护安防市场占据领先地位</p>
+                                    <p class="text-gray-600 text-sm">在文物保护安防市场占据领先地位</p>
                                 </div>
                             </div>
                             <div class="flex items-start space-x-3">
                                 <div class="w-6 h-6 bg-orange-500 rounded-full flex-shrink-0 mt-1"></div>
                                 <div>
                                     <h4 class="font-bold mb-1">让每一个文物都得到最好的保护</h4>
-                                    <p class="text-gray-400 text-sm">让科技为文化传承保驾护航</p>
+                                    <p class="text-gray-600 text-sm">让科技为文化传承保驾护航</p>
                                 </div>
                             </div>
                             <div class="flex items-start space-x-3">
                                 <div class="w-6 h-6 bg-green-500 rounded-full flex-shrink-0 mt-1"></div>
                                 <div>
                                     <h4 class="font-bold mb-1">推动行业技术创新与发展</h4>
-                                    <p class="text-gray-400 text-sm">持续研发，引领行业技术革新</p>
+                                    <p class="text-gray-600 text-sm">持续研发，引领行业技术革新</p>
                                 </div>
                             </div>
                         </div>
@@ -427,11 +428,11 @@
     </section>
 
     <!-- Company History -->
-    <section class="py-20 bg-gray-900">
+    <section class="py-20 bg-gray-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16 scroll-reveal">
                 <h2 class="font-heading text-4xl font-bold mb-4">发展历程</h2>
-                <p class="text-xl text-gray-400">从创业到领先，见证我们的成长足迹</p>
+                <p class="text-xl text-gray-600">从创业到领先，见证我们的成长足迹</p>
             </div>
             
             <div class="timeline-container">
@@ -439,14 +440,14 @@
                     <div class="timeline-marker">2021</div>
                     <div class="timeline-content">
                         <h3 class="font-heading text-2xl font-bold mb-3">公司成立</h3>
-                        <p class="text-gray-300 mb-4">
+                        <p class="text-gray-700 mb-4">
                             专注于AI+安防领域，汇聚行业顶尖人才，致力于打造智能安防解决方案。
                             初期团队20人，其中博士5人，硕士12人。
                         </p>
                         <div class="flex flex-wrap gap-2">
-                            <span class="bg-blue-600 text-white px-3 py-1 rounded-full text-sm">团队组建</span>
-                            <span class="bg-green-600 text-white px-3 py-1 rounded-full text-sm">产品研发</span>
-                            <span class="bg-purple-600 text-white px-3 py-1 rounded-full text-sm">市场调研</span>
+                            <span class="bg-blue-600 text-gray-900 px-3 py-1 rounded-full text-sm">团队组建</span>
+                            <span class="bg-green-600 text-gray-900 px-3 py-1 rounded-full text-sm">产品研发</span>
+                            <span class="bg-purple-600 text-gray-900 px-3 py-1 rounded-full text-sm">市场调研</span>
                         </div>
                     </div>
                 </div>
@@ -455,14 +456,14 @@
                     <div class="timeline-marker">2022</div>
                     <div class="timeline-content">
                         <h3 class="font-heading text-2xl font-bold mb-3">首单文物项目</h3>
-                        <p class="text-gray-300 mb-4">
+                        <p class="text-gray-700 mb-4">
                             黄山宏村智能安防项目成功落地，获得文物局高度认可。项目覆盖200+监控点位，
                             实现零破坏施工，99%识别准确率，3秒响应时间。
                         </p>
                         <div class="flex flex-wrap gap-2">
-                            <span class="bg-yellow-600 text-white px-3 py-1 rounded-full text-sm">宏村项目</span>
-                            <span class="bg-red-600 text-white px-3 py-1 rounded-full text-sm">文物局认可</span>
-                            <span class="bg-indigo-600 text-white px-3 py-1 rounded-full text-sm">技术突破</span>
+                            <span class="bg-yellow-600 text-gray-900 px-3 py-1 rounded-full text-sm">宏村项目</span>
+                            <span class="bg-red-600 text-gray-900 px-3 py-1 rounded-full text-sm">文物局认可</span>
+                            <span class="bg-indigo-600 text-gray-900 px-3 py-1 rounded-full text-sm">技术突破</span>
                         </div>
                     </div>
                 </div>
@@ -471,14 +472,14 @@
                     <div class="timeline-marker">2023</div>
                     <div class="timeline-content">
                         <h3 class="font-heading text-2xl font-bold mb-3">快速发展</h3>
-                        <p class="text-gray-300 mb-4">
+                        <p class="text-gray-700 mb-4">
                             获得5项发明专利，服务100+古建，成为文物保护协会成员单位。
                             客户满意度达到98%，业务覆盖多个省市。
                         </p>
                         <div class="flex flex-wrap gap-2">
-                            <span class="bg-orange-600 text-white px-3 py-1 rounded-full text-sm">5项专利</span>
-                            <span class="bg-teal-600 text-white px-3 py-1 rounded-full text-sm">100+项目</span>
-                            <span class="bg-pink-600 text-white px-3 py-1 rounded-full text-sm">协会成员</span>
+                            <span class="bg-orange-600 text-gray-900 px-3 py-1 rounded-full text-sm">5项专利</span>
+                            <span class="bg-teal-600 text-gray-900 px-3 py-1 rounded-full text-sm">100+项目</span>
+                            <span class="bg-pink-600 text-gray-900 px-3 py-1 rounded-full text-sm">协会成员</span>
                         </div>
                     </div>
                 </div>
@@ -487,11 +488,11 @@
     </section>
 
     <!-- Core Team -->
-    <section class="py-20 bg-gray-800">
+    <section class="py-20 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16 scroll-reveal">
                 <h2 class="font-heading text-4xl font-bold mb-4">核心团队</h2>
-                <p class="text-xl text-gray-400">汇聚行业精英，打造专业团队</p>
+                <p class="text-xl text-gray-600">汇聚行业精英，打造专业团队</p>
             </div>
             
             <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -499,12 +500,12 @@
                     <div class="team-avatar">CTO</div>
                     <h3 class="font-heading text-xl font-bold mb-2">张技术</h3>
                     <p class="text-yellow-400 mb-3">首席技术官</p>
-                    <p class="text-gray-400 text-sm mb-4">
+                    <p class="text-gray-600 text-sm mb-4">
                         安防行业5年经验，原海康威视技术总监。清华大学计算机博士，主导AI算法研发，获得5项发明专利。
                     </p>
                     <div class="flex justify-center space-x-2">
-                        <span class="bg-blue-600 text-white px-2 py-1 rounded text-xs">AI专家</span>
-                        <span class="bg-green-600 text-white px-2 py-1 rounded text-xs">博士</span>
+                        <span class="bg-blue-600 text-gray-900 px-2 py-1 rounded text-xs">AI专家</span>
+                        <span class="bg-green-600 text-gray-900 px-2 py-1 rounded text-xs">博士</span>
                     </div>
                 </div>
                 
@@ -512,12 +513,12 @@
                     <div class="team-avatar">顾问</div>
                     <h3 class="font-heading text-xl font-bold mb-2">李文博</h3>
                     <p class="text-yellow-400 mb-3">首席顾问</p>
-                    <p class="text-gray-400 text-sm mb-4">
+                    <p class="text-gray-600 text-sm mb-4">
                         文物保护专家，故宫博物院研究员。从事文物保护工作30年，提供文物场景专业指导，确保零破坏施工。
                     </p>
                     <div class="flex justify-center space-x-2">
-                        <span class="bg-purple-600 text-white px-2 py-1 rounded text-xs">文保专家</span>
-                        <span class="bg-red-600 text-white px-2 py-1 rounded text-xs">研究员</span>
+                        <span class="bg-purple-600 text-gray-900 px-2 py-1 rounded text-xs">文保专家</span>
+                        <span class="bg-red-600 text-gray-900 px-2 py-1 rounded text-xs">研究员</span>
                     </div>
                 </div>
                 
@@ -525,12 +526,12 @@
                     <div class="team-avatar">销售</div>
                     <h3 class="font-heading text-xl font-bold mb-2">王销售</h3>
                     <p class="text-yellow-400 mb-3">销售总监</p>
-                    <p class="text-gray-400 text-sm mb-4">
+                    <p class="text-gray-600 text-sm mb-4">
                         原阿里云企业事业部总监。10年B2B销售经验，建立全国销售网络，客户满意度98%。
                     </p>
                     <div class="flex justify-center space-x-2">
-                        <span class="bg-indigo-600 text-white px-2 py-1 rounded text-xs">B2B专家</span>
-                        <span class="bg-orange-600 text-white px-2 py-1 rounded text-xs">阿里云背景</span>
+                        <span class="bg-indigo-600 text-gray-900 px-2 py-1 rounded text-xs">B2B专家</span>
+                        <span class="bg-orange-600 text-gray-900 px-2 py-1 rounded text-xs">阿里云背景</span>
                     </div>
                 </div>
                 
@@ -538,12 +539,12 @@
                     <div class="team-avatar">产品</div>
                     <h3 class="font-heading text-xl font-bold mb-2">刘产品</h3>
                     <p class="text-yellow-400 mb-3">产品总监</p>
-                    <p class="text-gray-400 text-sm mb-4">
+                    <p class="text-gray-600 text-sm mb-4">
                         原华为IoT产品线经理。15年产品管理经验，打造行业标杆产品，获得红点设计奖。
                     </p>
                     <div class="flex justify-center space-x-2">
-                        <span class="bg-teal-600 text-white px-2 py-1 rounded text-xs">IoT专家</span>
-                        <span class="bg-pink-600 text-white px-2 py-1 rounded text-xs">红点奖</span>
+                        <span class="bg-teal-600 text-gray-900 px-2 py-1 rounded text-xs">IoT专家</span>
+                        <span class="bg-pink-600 text-gray-900 px-2 py-1 rounded text-xs">红点奖</span>
                     </div>
                 </div>
             </div>
@@ -551,83 +552,83 @@
     </section>
 
     <!-- Certifications -->
-    <section class="py-20 bg-gray-900">
+    <section class="py-20 bg-gray-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16 scroll-reveal">
                 <h2 class="font-heading text-4xl font-bold mb-4">资质荣誉</h2>
-                <p class="text-xl text-gray-400">权威认证，品质保证</p>
+                <p class="text-xl text-gray-600">权威认证，品质保证</p>
             </div>
             
             <div class="cert-grid">
                 <div class="cert-card scroll-reveal">
                     <div class="cert-icon">
-                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-8 h-8 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
                     </div>
                     <h3 class="font-heading text-lg font-bold mb-2">国家消防认证</h3>
-                    <p class="text-gray-400 text-sm">通过国家级消防产品认证，符合消防安全标准</p>
+                    <p class="text-gray-600 text-sm">通过国家级消防产品认证，符合消防安全标准</p>
                 </div>
                 
                 <div class="cert-card scroll-reveal">
                     <div class="cert-icon">
-                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-8 h-8 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
                         </svg>
                     </div>
                     <h3 class="font-heading text-lg font-bold mb-2">软件著作权</h3>
-                    <p class="text-gray-400 text-sm">15项软件著作权登记证书，技术创新成果</p>
+                    <p class="text-gray-600 text-sm">15项软件著作权登记证书，技术创新成果</p>
                 </div>
                 
                 <div class="cert-card scroll-reveal">
                     <div class="cert-icon">
-                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-8 h-8 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
                         </svg>
                     </div>
                     <h3 class="font-heading text-lg font-bold mb-2">文保协会成员</h3>
-                    <p class="text-gray-400 text-sm">中国文物保护协会成员单位，行业权威认可</p>
+                    <p class="text-gray-600 text-sm">中国文物保护协会成员单位，行业权威认可</p>
                 </div>
                 
                 <div class="cert-card scroll-reveal">
                     <div class="cert-icon">
-                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-8 h-8 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
                         </svg>
                     </div>
                     <h3 class="font-heading text-lg font-bold mb-2">ISO9001认证</h3>
-                    <p class="text-gray-400 text-sm">国际质量管理体系认证，管理规范专业</p>
+                    <p class="text-gray-600 text-sm">国际质量管理体系认证，管理规范专业</p>
                 </div>
                 
                 <div class="cert-card scroll-reveal">
                     <div class="cert-icon">
-                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-8 h-8 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
                         </svg>
                     </div>
                     <h3 class="font-heading text-lg font-bold mb-2">红点设计奖</h3>
-                    <p class="text-gray-400 text-sm">产品设计获得国际红点设计奖认可</p>
+                    <p class="text-gray-600 text-sm">产品设计获得国际红点设计奖认可</p>
                 </div>
                 
                 <div class="cert-card scroll-reveal">
                     <div class="cert-icon">
-                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-8 h-8 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                         </svg>
                     </div>
                     <h3 class="font-heading text-lg font-bold mb-2">高新技术企业</h3>
-                    <p class="text-gray-400 text-sm">国家级高新技术企业认定，技术创新领先</p>
+                    <p class="text-gray-600 text-sm">国家级高新技术企业认定，技术创新领先</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Client Testimonials -->
-    <section class="py-20 bg-gray-800">
+    <section class="py-20 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16 scroll-reveal">
                 <h2 class="font-heading text-4xl font-bold mb-4">客户证言</h2>
-                <p class="text-xl text-gray-400">听听他们怎么说</p>
+                <p class="text-xl text-gray-600">听听他们怎么说</p>
             </div>
             
             <div class="grid md:grid-cols-3 gap-8">
@@ -639,7 +640,7 @@
                         <div class="author-avatar">馆长</div>
                         <div>
                             <div class="font-bold">张明华</div>
-                            <div class="text-gray-400 text-sm">黄山宏村博物馆馆长</div>
+                            <div class="text-gray-600 text-sm">黄山宏村博物馆馆长</div>
                         </div>
                     </div>
                 </div>
@@ -652,7 +653,7 @@
                         <div class="author-avatar">村长</div>
                         <div>
                             <div class="font-bold">李建国</div>
-                            <div class="text-gray-400 text-sm">西递古村村委会主任</div>
+                            <div class="text-gray-600 text-sm">西递古村村委会主任</div>
                         </div>
                     </div>
                 </div>
@@ -665,7 +666,7 @@
                         <div class="author-avatar">总监</div>
                         <div>
                             <div class="font-bold">王安全</div>
-                            <div class="text-gray-400 text-sm">某大型企业安保总监</div>
+                            <div class="text-gray-600 text-sm">某大型企业安保总监</div>
                         </div>
                     </div>
                 </div>
@@ -674,52 +675,52 @@
     </section>
 
     <!-- Company Culture -->
-    <section class="py-20 bg-gray-900">
+    <section class="py-20 bg-gray-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16 scroll-reveal">
                 <h2 class="font-heading text-4xl font-bold mb-4">企业文化</h2>
-                <p class="text-xl text-gray-400">核心价值观引领我们前行</p>
+                <p class="text-xl text-gray-600">核心价值观引领我们前行</p>
             </div>
             
             <div class="culture-gallery">
                 <div class="culture-item scroll-reveal">
                     <div class="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-8 h-8 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
                     </div>
                     <h3 class="font-heading text-xl font-bold mb-3 text-center">专业</h3>
-                    <p class="text-gray-400 text-center">专注安防领域，追求技术卓越，为客户提供最专业的解决方案</p>
+                    <p class="text-gray-600 text-center">专注安防领域，追求技术卓越，为客户提供最专业的解决方案</p>
                 </div>
                 
                 <div class="culture-item scroll-reveal">
                     <div class="w-16 h-16 bg-gradient-to-r from-green-500 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-8 h-8 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                         </svg>
                     </div>
                     <h3 class="font-heading text-xl font-bold mb-3 text-center">创新</h3>
-                    <p class="text-gray-400 text-center">持续技术创新，引领行业发展，用科技为文物保护注入新动力</p>
+                    <p class="text-gray-600 text-center">持续技术创新，引领行业发展，用科技为文物保护注入新动力</p>
                 </div>
                 
                 <div class="culture-item scroll-reveal">
                     <div class="w-16 h-16 bg-gradient-to-r from-red-500 to-orange-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-8 h-8 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
                         </svg>
                     </div>
                     <h3 class="font-heading text-xl font-bold mb-3 text-center">责任</h3>
-                    <p class="text-gray-400 text-center">肩负文物保护使命，承担社会责任，用科技守护历史遗产</p>
+                    <p class="text-gray-600 text-center">肩负文物保护使命，承担社会责任，用科技守护历史遗产</p>
                 </div>
                 
                 <div class="culture-item scroll-reveal">
                     <div class="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-8 h-8 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
                         </svg>
                     </div>
                     <h3 class="font-heading text-xl font-bold mb-3 text-center">传承</h3>
-                    <p class="text-gray-400 text-center">传承历史文化，保护文明遗产，为子孙后代留下宝贵财富</p>
+                    <p class="text-gray-600 text-center">传承历史文化，保护文明遗产，为子孙后代留下宝贵财富</p>
                 </div>
             </div>
         </div>
@@ -729,7 +730,7 @@
     <section class="py-20 bg-gradient-to-r from-gray-800 to-gray-700">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 class="font-heading text-4xl font-bold mb-6 scroll-reveal">加入我们，一起守护文明</h2>
-            <p class="text-xl text-gray-300 mb-8 scroll-reveal">
+            <p class="text-xl text-gray-700 mb-8 scroll-reveal">
                 我们正在寻找志同道合的伙伴，共同为文物保护事业贡献力量
             </p>
             
@@ -741,22 +742,22 @@
     </section>
 
     <!-- Footer -->
-    <footer class="bg-gray-900 border-t border-gray-800 py-12">
+    <footer class="bg-gray-50 border-t border-gray-200 py-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center">
                 <div class="font-heading text-2xl font-bold gradient-text mb-4">智能安防系统</div>
-                <p class="text-gray-400 mb-6">用科技守护文明</p>
+                <p class="text-gray-600 mb-6">用科技守护文明</p>
                 
                 <div class="flex justify-center space-x-8 mb-8">
-                    <a href="index.html" class="text-gray-400 hover:text-white">首页</a>
-                    <a href="features.html" class="text-gray-400 hover:text-white">核心功能</a>
-                    <a href="technology.html" class="text-gray-400 hover:text-white">技术优势</a>
-                    <a href="solutions.html" class="text-gray-400 hover:text-white">行业方案</a>
-                    <a href="about.html" class="text-gray-400 hover:text-white">关于我们</a>
-                    <a href="contact.html" class="text-gray-400 hover:text-white">联系我们</a>
+                    <a href="index.html" class="text-gray-600 hover:text-gray-900">首页</a>
+                    <a href="features.html" class="text-gray-600 hover:text-gray-900">核心功能</a>
+                    <a href="technology.html" class="text-gray-600 hover:text-gray-900">技术优势</a>
+                    <a href="solutions.html" class="text-gray-600 hover:text-gray-900">行业方案</a>
+                    <a href="about.html" class="text-gray-600 hover:text-gray-900">关于我们</a>
+                    <a href="contact.html" class="text-gray-600 hover:text-gray-900">联系我们</a>
                 </div>
                 
-                <div class="border-t border-gray-800 pt-8">
+                <div class="border-t border-gray-200 pt-8">
                     <p class="text-gray-500 text-sm">© 2024 智能安防系统. 保留所有权利. | 皖ICP备12345678号</p>
                 </div>
             </div>

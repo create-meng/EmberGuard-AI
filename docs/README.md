@@ -143,7 +143,7 @@ website/
 
 ### 本地运行
 ```bash
-cd website
+cd docs
 python -m http.server 8000
 ```
 

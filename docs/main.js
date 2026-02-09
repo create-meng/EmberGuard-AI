@@ -1,15 +1,96 @@
 // Main JavaScript for Security System Website
 
+// 全局错误处理器
+class ErrorHandler {
+    static log(error, context = '') {
+        const errorInfo = {
+            message: error.message || String(error),
+            context: context,
+            timestamp: new Date().toISOString(),
+            userAgent: navigator.userAgent,
+            url: window.location.href
+        };
+        
+        console.error(`[${context}] 错误:`, error);
+        
+        // 发送到分析服务
+        if (typeof trackEvent !== 'undefined') {
+            trackEvent('javascript_error', errorInfo);
+        }
+        
+        return errorInfo;
+    }
+    
+    static wrap(fn, context = '') {
+        return function(...args) {
+            try {
+                return fn.apply(this, args);
+            } catch (error) {
+                ErrorHandler.log(error, context);
+                return null;
+            }
+        };
+    }
+    
+    static async wrapAsync(fn, context = '') {
+        try {
+            return await fn();
+        } catch (error) {
+            ErrorHandler.log(error, context);
+            return null;
+        }
+    }
+}
+
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize all components
-    initMobileMenu();
-    initTypedText();
-    initScrollReveal();
-    initNumberCounters();
-    initSolutionMatcher();
-    initChatWidget();
-    initSmoothScroll();
-    initPainPointAnimations();
+    // Initialize all components with error handling
+    try {
+        initMobileMenu();
+    } catch (error) {
+        ErrorHandler.log(error, 'initMobileMenu');
+    }
+    
+    try {
+        initTypedText();
+    } catch (error) {
+        ErrorHandler.log(error, 'initTypedText');
+    }
+    
+    try {
+        initScrollReveal();
+    } catch (error) {
+        ErrorHandler.log(error, 'initScrollReveal');
+    }
+    
+    try {
+        initNumberCounters();
+    } catch (error) {
+        ErrorHandler.log(error, 'initNumberCounters');
+    }
+    
+    try {
+        initSolutionMatcher();
+    } catch (error) {
+        ErrorHandler.log(error, 'initSolutionMatcher');
+    }
+    
+    try {
+        initChatWidget();
+    } catch (error) {
+        ErrorHandler.log(error, 'initChatWidget');
+    }
+    
+    try {
+        initSmoothScroll();
+    } catch (error) {
+        ErrorHandler.log(error, 'initSmoothScroll');
+    }
+    
+    try {
+        initPainPointAnimations();
+    } catch (error) {
+        ErrorHandler.log(error, 'initPainPointAnimations');
+    }
 });
 
 // Mobile Menu Toggle
@@ -27,7 +108,16 @@ function initMobileMenu() {
 // Typed Text Animation
 function initTypedText() {
     const typedElement = document.getElementById('typed-text');
-    if (typedElement) {
+    if (!typedElement) return;
+    
+    try {
+        // 检查 Typed.js 是否已加载
+        if (typeof Typed === 'undefined') {
+            console.warn('Typed.js 未加载，跳过打字动画');
+            typedElement.textContent = 'AI守护';
+            return;
+        }
+        
         new Typed('#typed-text', {
             strings: ['AI守护', '智能预警', '零破坏改造'],
             typeSpeed: 100,
@@ -37,77 +127,135 @@ function initTypedText() {
             showCursor: true,
             cursorChar: '|'
         });
+    } catch (error) {
+        ErrorHandler.log(error, 'initTypedText');
+        // 降级方案：显示静态文本
+        typedElement.textContent = 'AI守护';
     }
 }
 
 // Scroll Reveal Animation
 function initScrollReveal() {
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
-    
-    const observer = new IntersectionObserver(function(entries) {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('revealed');
-            }
+    try {
+        // 检查浏览器是否支持 IntersectionObserver
+        if (!('IntersectionObserver' in window)) {
+            console.warn('浏览器不支持 IntersectionObserver，使用降级方案');
+            // 降级方案：直接显示所有元素
+            document.querySelectorAll('.scroll-reveal').forEach(el => {
+                el.classList.add('revealed');
+            });
+            return;
+        }
+        
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('revealed');
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all scroll-reveal elements
+        const elements = document.querySelectorAll('.scroll-reveal');
+        if (elements.length === 0) {
+            console.info('未找到需要滚动显示的元素');
+            return;
+        }
+        
+        elements.forEach(el => {
+            observer.observe(el);
         });
-    }, observerOptions);
-    
-    // Observe all scroll-reveal elements
-    document.querySelectorAll('.scroll-reveal').forEach(el => {
-        observer.observe(el);
-    });
+    } catch (error) {
+        ErrorHandler.log(error, 'initScrollReveal');
+        // 降级方案：直接显示所有元素
+        document.querySelectorAll('.scroll-reveal').forEach(el => {
+            el.classList.add('revealed');
+        });
+    }
 }
 
 // Number Counter Animation
 function initNumberCounters() {
-    const counters = document.querySelectorAll('.number-counter');
-    
-    const animateCounter = (counter) => {
-        const target = parseInt(counter.getAttribute('data-target'));
-        const duration = 2000; // 2 seconds
-        const increment = target / (duration / 16); // 60fps
-        let current = 0;
+    try {
+        const counters = document.querySelectorAll('.number-counter');
+        if (counters.length === 0) return;
         
-        const timer = setInterval(() => {
-            current += increment;
-            if (current >= target) {
-                counter.textContent = target;
-                clearInterval(timer);
-            } else {
-                counter.textContent = Math.floor(current);
+        const animateCounter = (counter) => {
+            try {
+                const target = parseInt(counter.getAttribute('data-target'));
+                if (isNaN(target)) {
+                    console.warn('计数器目标值无效:', counter);
+                    return;
+                }
+                
+                const duration = 2000; // 2 seconds
+                const increment = target / (duration / 16); // 60fps
+                let current = 0;
+                
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= target) {
+                        counter.textContent = target;
+                        clearInterval(timer);
+                    } else {
+                        counter.textContent = Math.floor(current);
+                    }
+                }, 16);
+            } catch (error) {
+                ErrorHandler.log(error, 'animateCounter');
+                // 降级方案：直接显示目标值
+                const target = parseInt(counter.getAttribute('data-target'));
+                if (!isNaN(target)) {
+                    counter.textContent = target;
+                }
             }
-        }, 16);
-    };
-    
-    // Animate counters when they come into view
-    const counterObserver = new IntersectionObserver(function(entries) {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                animateCounter(entry.target);
-                counterObserver.unobserve(entry.target);
-            }
+        };
+        
+        // 检查浏览器是否支持 IntersectionObserver
+        if (!('IntersectionObserver' in window)) {
+            // 降级方案：直接动画所有计数器
+            counters.forEach(counter => animateCounter(counter));
+            return;
+        }
+        
+        // Animate counters when they come into view
+        const counterObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCounter(entry.target);
+                    counterObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+        
+        counters.forEach(counter => {
+            counterObserver.observe(counter);
         });
-    }, { threshold: 0.5 });
-    
-    counters.forEach(counter => {
-        counterObserver.observe(counter);
-    });
+    } catch (error) {
+        ErrorHandler.log(error, 'initNumberCounters');
+    }
 }
 
 // Solution Matcher Form
 function initSolutionMatcher() {
-    const form = document.getElementById('solution-matcher');
-    const resultDiv = document.getElementById('matcher-result');
-    const investmentSpan = document.getElementById('investment');
-    const savingsSpan = document.getElementById('savings');
-    const paybackSpan = document.getElementById('payback');
-    
-    if (form) {
+    try {
+        const form = document.getElementById('solution-matcher');
+        if (!form) return;
+        
+        const resultDiv = document.getElementById('matcher-result');
+        const investmentSpan = document.getElementById('investment');
+        const savingsSpan = document.getElementById('savings');
+        const paybackSpan = document.getElementById('payback');
+        
         form.addEventListener('submit', function(e) {
             e.preventDefault();
+            
+            try {
             
             const formData = new FormData(form);
             const scenario = formData.get('scenario');
@@ -146,30 +294,42 @@ function initSolutionMatcher() {
             const finalPrice = basePrice * (1 - discount);
             const paybackPeriod = finalPrice / annualSavings;
             
-            // Update UI
-            investmentSpan.textContent = `¥${finalPrice.toLocaleString()}`;
-            savingsSpan.textContent = `¥${annualSavings.toLocaleString()}`;
-            paybackSpan.textContent = `${paybackPeriod.toFixed(1)}年`;
-            
-            resultDiv.classList.remove('hidden');
-            
-            // Animate the result
-            anime({
-                targets: resultDiv,
-                opacity: [0, 1],
-                translateY: [20, 0],
-                duration: 500,
-                easing: 'easeOutQuad'
-            });
-            
-            // Track conversion
-            trackEvent('solution_matcher_completed', {
-                scenario,
-                cameras,
-                area,
-                price: finalPrice
-            });
+                // Update UI
+                if (investmentSpan) investmentSpan.textContent = `¥${finalPrice.toLocaleString()}`;
+                if (savingsSpan) savingsSpan.textContent = `¥${annualSavings.toLocaleString()}`;
+                if (paybackSpan) paybackSpan.textContent = `${paybackPeriod.toFixed(1)}年`;
+                
+                if (resultDiv) {
+                    resultDiv.classList.remove('hidden');
+                    
+                    // Animate the result
+                    if (typeof anime !== 'undefined') {
+                        anime({
+                            targets: resultDiv,
+                            opacity: [0, 1],
+                            translateY: [20, 0],
+                            duration: 500,
+                            easing: 'easeOutQuad'
+                        });
+                    }
+                }
+                
+                // Track conversion
+                if (typeof trackEvent !== 'undefined') {
+                    trackEvent('solution_matcher_completed', {
+                        scenario,
+                        cameras,
+                        area,
+                        price: finalPrice
+                    });
+                }
+            } catch (error) {
+                ErrorHandler.log(error, 'solutionMatcherSubmit');
+                alert('计算出错，请稍后重试或联系客服');
+            }
         });
+    } catch (error) {
+        ErrorHandler.log(error, 'initSolutionMatcher');
     }
 }
 
@@ -210,29 +370,54 @@ function initSmoothScroll() {
 
 // Pain Point Card Animations
 function initPainPointAnimations() {
-    const painPointCards = document.querySelectorAll('.pain-point-card');
-    
-    painPointCards.forEach(card => {
-        card.addEventListener('mouseenter', function() {
-            anime({
-                targets: this.querySelector('svg'),
-                scale: [1, 1.2],
-                rotate: [0, 10],
-                duration: 300,
-                easing: 'easeOutQuad'
-            });
-        });
+    try {
+        const painPointCards = document.querySelectorAll('.pain-point-card');
+        if (painPointCards.length === 0) return;
         
-        card.addEventListener('mouseleave', function() {
-            anime({
-                targets: this.querySelector('svg'),
-                scale: [1.2, 1],
-                rotate: [10, 0],
-                duration: 300,
-                easing: 'easeOutQuad'
+        // 检查 anime.js 是否已加载
+        if (typeof anime === 'undefined') {
+            console.warn('anime.js 未加载，跳过卡片动画');
+            return;
+        }
+        
+        painPointCards.forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                try {
+                    const svg = this.querySelector('svg');
+                    if (svg) {
+                        anime({
+                            targets: svg,
+                            scale: [1, 1.2],
+                            rotate: [0, 10],
+                            duration: 300,
+                            easing: 'easeOutQuad'
+                        });
+                    }
+                } catch (error) {
+                    ErrorHandler.log(error, 'painPointCardHover');
+                }
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                try {
+                    const svg = this.querySelector('svg');
+                    if (svg) {
+                        anime({
+                            targets: svg,
+                            scale: [1.2, 1],
+                            rotate: [10, 0],
+                            duration: 300,
+                            easing: 'easeOutQuad'
+                        });
+                    }
+                } catch (error) {
+                    ErrorHandler.log(error, 'painPointCardLeave');
+                }
             });
         });
-    });
+    } catch (error) {
+        ErrorHandler.log(error, 'initPainPointAnimations');
+    }
 }
 
 // Consult Button Handler
@@ -274,13 +459,18 @@ function startChat(type) {
 
 // Analytics Tracking
 function trackEvent(eventName, properties = {}) {
-    // In a real implementation, this would send data to analytics service
-    console.log('Event tracked:', eventName, properties);
-    
+    // Send data to analytics service
     // Example: Google Analytics 4
     if (typeof gtag !== 'undefined') {
         gtag('event', eventName, properties);
     }
+    
+    // Example: Custom analytics endpoint
+    // fetch('/api/analytics', {
+    //     method: 'POST',
+    //     headers: { 'Content-Type': 'application/json' },
+    //     body: JSON.stringify({ event: eventName, properties })
+    // });
 }
 
 // Utility Functions
@@ -320,44 +510,355 @@ function initPerformanceMonitoring() {
 // Initialize performance monitoring
 initPerformanceMonitoring();
 
-// Lazy Loading for Images
-function initLazyLoading() {
-    const images = document.querySelectorAll('img[data-src]');
+// Service Worker 注册
+function registerServiceWorker() {
+    if (!('serviceWorker' in navigator)) {
+        console.info('浏览器不支持 Service Worker');
+        return;
+    }
     
+    try {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/service-worker.js')
+                .then(registration => {
+                    console.log('Service Worker 注册成功:', registration.scope);
+                    
+                    // 检查更新
+                    registration.addEventListener('updatefound', () => {
+                        const newWorker = registration.installing;
+                        console.log('发现新版本 Service Worker');
+                        
+                        newWorker.addEventListener('statechange', () => {
+                            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                                // 新版本可用，提示用户刷新
+                                if (confirm('网站有新版本可用，是否立即更新？')) {
+                                    newWorker.postMessage({ type: 'SKIP_WAITING' });
+                                    window.location.reload();
+                                }
+                            }
+                        });
+                    });
+                })
+                .catch(error => {
+                    console.error('Service Worker 注册失败:', error);
+                    ErrorHandler.log(error, 'registerServiceWorker');
+                });
+            
+            // 监听 Service Worker 控制器变化
+            navigator.serviceWorker.addEventListener('controllerchange', () => {
+                console.log('Service Worker 控制器已更新');
+            });
+        });
+    } catch (error) {
+        ErrorHandler.log(error, 'registerServiceWorker');
+    }
+}
+
+// 注册 Service Worker
+registerServiceWorker();
+
+// 缓存管理工具
+window.CacheManager = {
+    // 清除所有缓存
+    clearAll() {
+        // 清除 Service Worker 缓存
+        if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+            navigator.serviceWorker.controller.postMessage({ type: 'CLEAR_CACHE' });
+        }
+        
+        // 清除 localStorage 缓存
+        ImageCache.cleanup();
+        
+        console.log('所有缓存已清除');
+    },
+    
+    // 获取缓存大小
+    async getSize() {
+        if ('storage' in navigator && 'estimate' in navigator.storage) {
+            const estimate = await navigator.storage.estimate();
+            const usage = estimate.usage || 0;
+            const quota = estimate.quota || 0;
+            const percentUsed = (usage / quota * 100).toFixed(2);
+            
+            return {
+                usage: formatBytes(usage),
+                quota: formatBytes(quota),
+                percentUsed: percentUsed + '%'
+            };
+        }
+        return null;
+    },
+    
+    // 预缓存资源列表
+    async precache(urls) {
+        if ('caches' in window) {
+            const cache = await caches.open('precache-v1');
+            await cache.addAll(urls);
+            console.log('预缓存完成:', urls.length, '个资源');
+        }
+    }
+};
+
+// 格式化字节大小
+function formatBytes(bytes) {
+    if (bytes === 0) return '0 Bytes';
+    const k = 1024;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' ' + sizes[i];
+}
+
+// Enhanced Lazy Loading for Images
+function initLazyLoading() {
+    // 检查浏览器是否支持 IntersectionObserver
+    if (!('IntersectionObserver' in window)) {
+        // 降级方案：直接加载所有图片
+        loadAllImages();
+        return;
+    }
+    
+    const config = {
+        rootMargin: '50px 0px', // 提前50px开始加载
+        threshold: 0.01
+    };
+    
+    // 图片懒加载观察器
     const imageObserver = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                const img = entry.target;
-                img.src = img.dataset.src;
-                img.classList.remove('lazy');
-                observer.unobserve(img);
+                const element = entry.target;
+                loadImage(element);
+                observer.unobserve(element);
             }
         });
+    }, config);
+    
+    // 观察所有懒加载图片
+    const lazyImages = document.querySelectorAll('img[data-src], [data-bg]');
+    lazyImages.forEach(element => {
+        imageObserver.observe(element);
     });
     
-    images.forEach(img => imageObserver.observe(img));
+    // 预加载关键图片（首屏图片）
+    preloadCriticalImages();
 }
+
+// 加载单个图片元素
+function loadImage(element) {
+    const isImg = element.tagName === 'IMG';
+    
+    if (isImg) {
+        // 处理 <img> 标签
+        const src = element.dataset.src;
+        const srcset = element.dataset.srcset;
+        
+        if (src) {
+            // 添加加载动画
+            element.classList.add('loading');
+            
+            // 创建新图片对象预加载
+            const img = new Image();
+            
+            img.onload = () => {
+                element.src = src;
+                if (srcset) {
+                    element.srcset = srcset;
+                }
+                element.classList.remove('lazy', 'loading');
+                element.classList.add('loaded');
+                
+                // 添加淡入动画
+                element.style.opacity = '0';
+                setTimeout(() => {
+                    element.style.transition = 'opacity 0.3s ease-in';
+                    element.style.opacity = '1';
+                }, 10);
+            };
+            
+            img.onerror = () => {
+                element.classList.remove('loading');
+                element.classList.add('error');
+                console.error('图片加载失败:', src);
+            };
+            
+            img.src = src;
+            if (srcset) {
+                img.srcset = srcset;
+            }
+        }
+    } else {
+        // 处理背景图片
+        const bg = element.dataset.bg;
+        if (bg) {
+            element.style.backgroundImage = `url('${bg}')`;
+            element.classList.remove('lazy');
+            element.classList.add('loaded');
+        }
+    }
+}
+
+// 降级方案：直接加载所有图片
+function loadAllImages() {
+    const lazyImages = document.querySelectorAll('img[data-src], [data-bg]');
+    lazyImages.forEach(element => {
+        loadImage(element);
+    });
+}
+
+// 预加载关键图片（首屏图片）
+function preloadCriticalImages() {
+    const criticalImages = document.querySelectorAll('[data-priority="high"]');
+    criticalImages.forEach(element => {
+        loadImage(element);
+    });
+}
+
+// 图片缓存管理
+const ImageCache = {
+    // 缓存键前缀
+    CACHE_PREFIX: 'img_cache_',
+    CACHE_VERSION: 'v1',
+    CACHE_DURATION: 7 * 24 * 60 * 60 * 1000, // 7天
+    
+    // 生成缓存键
+    getCacheKey(url) {
+        return `${this.CACHE_PREFIX}${this.CACHE_VERSION}_${url}`;
+    },
+    
+    // 保存到缓存
+    set(url, data) {
+        try {
+            const cacheData = {
+                data: data,
+                timestamp: Date.now()
+            };
+            localStorage.setItem(this.getCacheKey(url), JSON.stringify(cacheData));
+        } catch (e) {
+            console.warn('缓存保存失败:', e);
+        }
+    },
+    
+    // 从缓存获取
+    get(url) {
+        try {
+            const cached = localStorage.getItem(this.getCacheKey(url));
+            if (!cached) return null;
+            
+            const cacheData = JSON.parse(cached);
+            const age = Date.now() - cacheData.timestamp;
+            
+            // 检查是否过期
+            if (age > this.CACHE_DURATION) {
+                this.remove(url);
+                return null;
+            }
+            
+            return cacheData.data;
+        } catch (e) {
+            console.warn('缓存读取失败:', e);
+            return null;
+        }
+    },
+    
+    // 删除缓存
+    remove(url) {
+        try {
+            localStorage.removeItem(this.getCacheKey(url));
+        } catch (e) {
+            console.warn('缓存删除失败:', e);
+        }
+    },
+    
+    // 清理过期缓存
+    cleanup() {
+        try {
+            const keys = Object.keys(localStorage);
+            keys.forEach(key => {
+                if (key.startsWith(this.CACHE_PREFIX)) {
+                    const cached = localStorage.getItem(key);
+                    if (cached) {
+                        const cacheData = JSON.parse(cached);
+                        const age = Date.now() - cacheData.timestamp;
+                        if (age > this.CACHE_DURATION) {
+                            localStorage.removeItem(key);
+                        }
+                    }
+                }
+            });
+        } catch (e) {
+            console.warn('缓存清理失败:', e);
+        }
+    }
+};
+
+// 初始化缓存清理
+ImageCache.cleanup();
 
 // Initialize lazy loading
 initLazyLoading();
 
-// Error Handling
+// Global Error Handling
 window.addEventListener('error', function(e) {
-    console.error('JavaScript error:', e.error);
-    trackEvent('javascript_error', {
+    const errorInfo = {
         message: e.message,
         filename: e.filename,
-        lineno: e.lineno
-    });
+        lineno: e.lineno,
+        colno: e.colno,
+        stack: e.error ? e.error.stack : null
+    };
+    
+    console.error('全局错误:', errorInfo);
+    
+    // Log errors to analytics service
+    if (typeof trackEvent !== 'undefined') {
+        trackEvent('javascript_error', errorInfo);
+    }
+    
+    // 防止错误冒泡导致页面崩溃
+    return true;
 });
 
 // Unhandled Promise Rejection
 window.addEventListener('unhandledrejection', function(e) {
-    console.error('Unhandled promise rejection:', e.reason);
-    trackEvent('promise_rejection', {
-        reason: e.reason.toString()
-    });
+    const errorInfo = {
+        reason: e.reason ? e.reason.toString() : 'Unknown',
+        promise: e.promise,
+        stack: e.reason && e.reason.stack ? e.reason.stack : null
+    };
+    
+    console.error('未处理的 Promise 拒绝:', errorInfo);
+    
+    // Log promise rejections to analytics service
+    if (typeof trackEvent !== 'undefined') {
+        trackEvent('promise_rejection', errorInfo);
+    }
+    
+    // 防止未处理的 Promise 导致页面崩溃
+    e.preventDefault();
 });
+
+// 资源加载错误处理
+window.addEventListener('error', function(e) {
+    if (e.target !== window) {
+        const element = e.target;
+        const tagName = element.tagName;
+        
+        if (tagName === 'IMG' || tagName === 'SCRIPT' || tagName === 'LINK') {
+            console.error('资源加载失败:', {
+                type: tagName,
+                src: element.src || element.href,
+                currentSrc: element.currentSrc
+            });
+            
+            if (typeof trackEvent !== 'undefined') {
+                trackEvent('resource_load_error', {
+                    type: tagName,
+                    url: element.src || element.href
+                });
+            }
+        }
+    }
+}, true);
 
 // Export functions for use in other pages
 window.SecuritySystem = {
@@ -365,5 +866,9 @@ window.SecuritySystem = {
     startChat,
     debounce,
     initScrollReveal,
-    initNumberCounters
+    initNumberCounters,
+    ImageCache,
+    CacheManager,
+    loadImage,
+    preloadCriticalImages
 };
